@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<div class="post-action-dropdown" th:fragment="showActionDots(post)">
+<div class="dropleft">
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-three-dots dropdown-toggle"  data-toggle="dropdown"  fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+    </svg>
+    <div class="dropdown-menu">
+            <span th:if="${post.pinned}==true">
+                <form   th:action="@{${'/post/unpin/'+post.id}}" method="post">
+                    <button class="dropdown-item"   type="submit" >Unpin Post</button>
+                </form>
+
+            </span>
+       <span th:if="${post.pinned}==false">
+           <form   th:action="@{${'/post/pin/'+post.id}}" method="post">
+               <button class="dropdown-item"   type="submit">Pin Top of Post</button>
+           </form>
+       </span>
+        <a class="dropdown-item" th:href="@{${'/post/update/'+post.id}}" th:text="Edit"></a>
+
+    </div>
+</div>
+    </div>
+</body>
+</html>

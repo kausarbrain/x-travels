@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<div class="row" th:fragment="paginate(pDetails, pBaseUrl, currentPage)" th:if="${pDetails.totalPages>1}">
+    <div class="col">
+        <div class="block-27">
+            <ul th:with="nextPage=${currentPage}+1,previousPage=${currentPage}-1">
+                <li th:if="${!pDetails.first}"><a th:href="@{${pBaseUrl}+${previousPage}}"  >&lt</a></li>
+                <li  th:each="i : ${#numbers.sequence(1,postPage.totalPages)}"
+                    th:classappend="${currentPage}==${i}?'active':''">
+                    <a th:href="@{${pBaseUrl}+${i}}" th:text="${i}"></a>
+                </li>
+                <li th:if="${!postPage.last}"><a th:href="@{${pBaseUrl}+${nextPage}}">&gt;</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

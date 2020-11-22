@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="layout">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Post</title>
+</head>
+<body>
+<div class="post-update-page" style="width: 100%" layout:fragment="content">
+
+    <div class="row" th:if="${existPost.isEmpty()}">
+        <div th:replace="common/message::alert ('danger', 'No such post is present')"></div>
+    </div>
+    <span th:if="${existPost.isPresent()}">
+        <div th:replace="post/form::postForm(${'/post/update/'+post.id},${post},${privacyTypes},${locations},'Update')"></div>
+    </span>
+
+</div>
+</body>
+</html>

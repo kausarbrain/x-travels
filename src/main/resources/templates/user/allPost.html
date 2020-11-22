@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content">
+
+        <div class="row">
+            <div th:if="${pinnedPost.isPresent()}" class="col-12">
+
+                <div th:replace="post/single::singlePost(${pinnedPost.get()},true)">
+
+                </div>
+            </div>
+
+            <p>Recent Activities</p>
+            <div class="col-12" th:each="post: ${postPage.content}">
+                <div th:replace="post/single::singlePost(${post},true)">
+
+                </div>
+
+            </div>
+        </div>
+        <nav aria-label="Page navigation example" th:if="${postPage.totalPages>1}">
+            <ul class="pagination" th:with="baseUrl='/profile/page/',nextPage=${currentPage}+1,previousPage=${currentPage}-1">
+                <li class="page-item" th:if="${!postPage.first}">
+                    <a class="page-link" th:href="@{${baseUrl}+${previousPage}}"  aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item " th:each="i : ${#numbers.sequence(1,postPage.totalPages)}"
+                    th:classappend="${currentPage}==${i}?'active':''">
+                    <a th:href="@{${baseUrl}+${i}}" th:text="${i}" class="page-link"
+                    ></a>
+                </li>
+                <li class="page-item" th:if="${!postPage.last}">
+                    <a class="page-link" th:href="@{${baseUrl}+${nextPage}}"   aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+</div>
+</body>
+</html>

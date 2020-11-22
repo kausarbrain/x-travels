@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title layout:title-pattern="$CONTENT_TITLE|$LAYOUT_TITLE">Admin</title>
+    <meta
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+            name="viewport" />
+    <link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.css}" />
+
+
+    <style>
+        .post .card-body svg{
+            font-size: 16px;
+            font-weight: bolder;
+        }
+        .container{
+            padding: 20px 10px;
+            height: 100vh;
+        }
+
+        .footer {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            color: white;
+            height: 100px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">X Travels Home Page</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/admin}">Admin Home</a>
+                </li>
+
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form name="logoutForm" th:action="@{/logout}" method="post"></form>
+                    <a class="nav-link "  href="javascript:document.logoutForm.submit()">Logout</a>
+                </li>
+
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div layout:fragment="content">
+        <!-- Your Page Content Here -->
+
+    </div>
+
+</div>
+
+
+<div class="footer">
+</div>
+
+</body>
+</html>

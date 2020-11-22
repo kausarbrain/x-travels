@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+
+</head>
+<body>
+<div class="row" style="width: 100%" th:fragment="userInfo">
+    <div class="col-12" sec:authorize="isAuthenticated()" th:with="loginUser=${#authentication.getPrincipal().getUser()}">
+        <div class="login-user-profile card">
+            <div class="img"  th:text="${#strings.substring(loginUser.name,0,1)}">
+            </div>
+            <div class="description">
+                <h4 class="name" th:text="${loginUser.name}"></h4>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+
+user-registration:
+  errors:
+    name:
+      required: User name is required
+

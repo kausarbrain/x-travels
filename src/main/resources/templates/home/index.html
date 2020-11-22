@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row mb-5">
+        <div class="col-12">
+            <a th:href="@{'/post'}">
+                <div class="form-group ">
+                    <input type="text"  class="form-control"  placeholder="Place status here..." >
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row" th:if="!${postPage.isEmpty()}">
+        <div class="col-12" th:each="post: ${postPage.content}">
+
+            <div th:replace="post/single::singlePost(${post},false)">
+
+            </div>
+
+        </div>
+        <div class="col-12">
+            <div th:replace="common/pagination::paginate(${postPage}, '/home/page/', ${currentPage})"></div>
+        </div>
+    </div>
+
+
+</div>
+
+<div layout:fragment="sidebar">
+    <div sec:authorize="isAnonymous()" class="row" >
+        <div class="col-sm-12">
+<!--            <div th:replace="login/form::loginForm"></div>-->
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

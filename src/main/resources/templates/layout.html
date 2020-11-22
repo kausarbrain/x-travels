@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title layout:title-pattern="$CONTENT_TITLE|$LAYOUT_TITLE">X Travels</title>
+	<meta
+			content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+			name="viewport" />
+	<!--	<link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.css}" />-->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet"  th:href="@{/assets/theme/css/open-iconic-bootstrap.min.css}">
+	<link rel="stylesheet"  th:href="@{/assets/theme/css/animate.css}">
+
+	<link rel="stylesheet"  th:href="@{/assets/theme/css/owl.carousel.min.css}">
+	<link rel="stylesheet"  th:href="@{/assets/theme/css/owl.theme.default.min.css}">
+	<link rel="stylesheet"  th:href="@{/assets/theme/css/magnific-popup.css}">
+
+	<link rel="stylesheet"  th:href="@{/assets/theme/css/aos.css}">
+
+	<link rel="stylesheet"  th:href="@{/assets/theme/css/ionicons.min.css}">
+
+	<link rel="stylesheet"  th:href="@{/assets/theme/css/bootstrap-datepicker.css}">
+	<link rel="stylesheet"  th:href="@{/assets/theme/css/jquery.timepicker.css}">
+
+
+	<link rel="stylesheet"  th:href="@{/assets/theme/css/flaticon.css}">
+	<link rel="stylesheet"  th:href="@{/assets/theme/css/icomoon.css}">
+	<link rel="stylesheet"  th:href="@{/assets/theme/css/style.css}">
+
+
+
+</head>
+
+<body>
+<div id="colorlib-page">
+	<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+	<aside id="colorlib-aside" role="complementary" class="js-fullheight">
+		<nav id="colorlib-main-menu" role="navigation">
+			<ul>
+				<li ><a th:href="@{/}">Home</a></li>
+
+				<span sec:authorize="isAuthenticated()">
+					<li><a th:href="@{/profile}">Profile</a></li>
+
+					<li >
+					<form name="logoutForm" th:action="@{/logout}" method="post"></form>
+					<a  href="javascript:document.logoutForm.submit()">Logout</a>
+				</li>
+				</span>
+
+				<span  sec:authorize="!isAuthenticated()">
+					<li>
+					<a  th:href="@{/login}">Login</a>
+				  </li>
+					<li>
+					<a  th:href="@{/registration}">Registration</a>
+					</li>
+				</span>
+
+
+			</ul>
+		</nav>
+
+	</aside> <!-- END COLORLIB-ASIDE -->
+	<div id="colorlib-main">
+		<section class="ftco-section ftco-no-pt ftco-no-pb">
+			<div class="container">
+				<div class="row d-flex">
+					<div class="col-xl-8 py-5 px-md-5">
+						<div class="row pt-md-4">
+							<div layout:fragment="content">
+								<!-- Your Page Content Here -->
+
+							</div>
+						</div><!-- END-->
+					</div>
+					<div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
+						<div th:replace="user/info::userInfo"></div>
+
+						<div layout:fragment="sidebar">
+
+						</div>
+
+					</div><!-- END COL -->
+				</div>
+			</div>
+		</section>
+	</div><!-- END COLORLIB-MAIN -->
+</div><!-- END COLORLIB-PAGE -->
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+<script th:src="@{/assets/theme/js/jquery.min.js}"></script>
+<script th:src="@{/assets/theme/js/jquery-migrate-3.0.1.min.js}"></script>
+<script th:src="@{/assets/theme/js/popper.min.js}"></script>
+<script th:src="@{/assets/theme/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/theme/js/jquery.easing.1.3.js}"></script>
+<script th:src="@{/assets/theme/js/jquery.waypoints.min.js}"></script>
+<script th:src="@{/assets/theme/js/jquery.stellar.min.js}"></script>
+<script th:src="@{/assets/theme/js/owl.carousel.min.js}"></script>
+<script th:src="@{/assets/theme/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/assets/theme/js/aos.js}"></script>
+<script th:src="@{/assets/theme/js/jquery.animateNumber.min.js}"></script>
+<script th:src="@{/assets/theme/js/scrollax.min.js}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script th:src="@{/assets/theme/js/google-map.js}"></script>
+<script th:src="@{/assets/theme/js/main.js}"></script>
+</body>
+</html>
