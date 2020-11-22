@@ -6,12 +6,8 @@ import com.xtravels.models.User;
 import com.xtravels.service.PostService;
 import com.xtravels.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.constraints.Min;
@@ -21,9 +17,6 @@ import java.util.Optional;
 @Controller
  public class UserController {
     private int pageSize = 5;
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
     @Autowired
      public PostService postService;
     @Autowired
@@ -32,12 +25,9 @@ import java.util.Optional;
     @GetMapping({"/profile", "profile/page/{page}"})
     public ModelAndView profile( @PathVariable(value="page") Optional<Integer> page,Authentication authentication){
        ModelAndView mv=new ModelAndView("user/allPost");
-        User user =getLoginUser(authentication);
+        var user =userService.getLoginUser(authentication);
         int currentPage = page.orElse(1);
-        Pageable pageable = PageRequest.of(currentPage-1,
-                this.pageSize, Sort.by("id").descending());
-
-        var postPage= postService.findAllByUser(user,pageable);
+        var postPage= postService.findAllByUser(user,currentPage,pageSize);
         mv.addObject("postPage",postPage);
         mv.addObject("currentPage",currentPage);
         mv=binPinnedPostToView(mv,user);
@@ -50,7 +40,7 @@ import java.util.Optional;
         var mv=new ModelAndView("user/profile/index");
         Optional<User> user =userService.getUserById(id);
         mv.addObject("user",user);
-        User loginUser=getLoginUser(auth);
+        var loginUser=userService.getLoginUser(auth);
         if(user.isPresent()){
             mv.addObject("isShowActionDots",loginUser.getId()==user.get().getId());
             mv=binPinnedPostToView(mv,user.get());
@@ -73,9 +63,4 @@ import java.util.Optional;
         }
         return "login/index";
     }
-    private User getLoginUser(Authentication authentication){
-        var userDetails=(LoginUserDetails) authentication.getPrincipal();
-        return userDetails.getUser();
-    }
-
 }

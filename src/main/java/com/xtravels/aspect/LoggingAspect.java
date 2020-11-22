@@ -41,7 +41,7 @@ public class LoggingAspect {
             log.info(className +" : "+methodName +" Response :"+response);
 
         }catch (JsonProcessingException e){
-            e.getMessage();
+          log.info("[JsonProcessingException] "+e.getMessage());
         }
 
         return  object;

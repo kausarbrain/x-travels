@@ -32,10 +32,7 @@ public class AdminController {
     @PostMapping("/location")
     public String location(@Valid @ModelAttribute("locationForm") Location location, BindingResult bindingResult){
         if(!bindingResult.hasErrors()){
-            Optional<Location> existLocation=locationService.findLocationByName(location.getName());
-            if(existLocation.isEmpty()){
-                locationService.save(location);
-            }
+            locationService.save(location);
         }
         return "redirect:/admin";
     }

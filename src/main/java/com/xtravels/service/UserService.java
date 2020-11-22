@@ -11,9 +11,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -30,12 +34,27 @@ public class UserService implements UserDetailsService {
         BeanUtils.copyProperties(userRegistrationDto,user);
         Optional<Role> role= userRoleRepository.getByName("USER");
         if(role.isPresent()){
-            user.setRoles(role.stream().collect(Collectors.toList()));
+            user.setRoles(List.of(role.get()));
         }else{
             user.setRoles(Arrays.asList(new Role("USER")));
         }
         user.setActive(true);
         return userRepository.save(user);
+    }
+
+    public boolean registerUser(UserRegistrationDto userData, BindingResult bindingResult, PasswordEncoder encoder){
+        if(!userData.getPassword().equals(userData.getConfirmPassword()))
+            bindingResult.rejectValue("confirmPassword","error.user","Confirm Password is not Matching");
+        if(!bindingResult.hasErrors()){
+            Optional<User> existUser=getUserByEmail(userData.getEmail());
+            if(existUser.isPresent())
+                bindingResult.rejectValue("email","error.user","Email is already registerd");
+        }
+        if(bindingResult.hasErrors()){
+            return  false;
+        }
+        userData.setPassword(encoder.encode(userData.getPassword()));
+        return Optional.of(save(userData)).isPresent();
     }
 
 
@@ -53,5 +72,11 @@ public class UserService implements UserDetailsService {
     public Optional<User> getUserById(Long id){
         return  userRepository.getUserById(id);
     }
+
+    public User getLoginUser(Authentication authentication){
+        var userDetails=(LoginUserDetails) authentication.getPrincipal();
+        return userDetails.getUser();
+    }
+
 
 }
