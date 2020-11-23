@@ -78,5 +78,18 @@ public class UserService implements UserDetailsService {
         return userDetails.getUser();
     }
 
+    public User saveAdminUser(User user) {
+        Optional<Role> role= userRoleRepository.getByName("ADMIN");
+        if(role.isPresent()){
+            user.setRoles(List.of(role.get()));
+        }else{
+            user.setRoles(Arrays.asList(new Role("ADMIN")));
+        }
+        user.setActive(true);
+        return userRepository.save(user);
+    }
+
+    
+
 
 }
